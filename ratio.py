@@ -9,16 +9,21 @@ I = TypeVar("I")
 class Percentiles(Generic[T]):
 
     def __init__(self) -> None:
-        raise NotImplementedError()
+        self.points = []
     
     def add_point(self, item: T):
-        raise NotImplementedError()
+        self.points.append(item)
+        self.points.sort()
     
     def remove_point(self, item: T):
-        raise NotImplementedError()
+        if item in self.points:
+            self.points.remove(item)
 
     def ratio(self, x, y):
-        raise NotImplementedError()
+        n = len(self.points)
+        x_count = max(1, int(x * n / 100))
+        y_count = max(1, int(y * n / 100))
+        return self.points[:x_count] + self.points[-y_count:]
 
 if __name__ == "__main__":
     points = list(range(50))
