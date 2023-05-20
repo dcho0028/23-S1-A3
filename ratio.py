@@ -15,7 +15,7 @@ class Percentiles(Generic[T]):
     
     def add_point(self, item: T):
         self.points.append(item)
-        #self.points.sort()
+
     
     def remove_point(self, item: T):
         if item in self.points:

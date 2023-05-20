@@ -206,13 +206,13 @@ class BinarySearchTree(Generic[K, I]):
 
 
         if current.left is not None:
-            left_size = current.left.subtree_size
+            left_side = current.left.subtree_size
         else:
-            left_size = 0
+            left_side = 0
 
-        if k == left_size + 1:
+        if k == left_side + 1:
             return current
-        elif k <= left_size:
+        elif k <= left_side:
             return self.kth_smallest(k, current.left)
         else:
-            return self.kth_smallest(k - (left_size + 1), current.right)
+            return self.kth_smallest(k - (left_side + 1), current.right)
