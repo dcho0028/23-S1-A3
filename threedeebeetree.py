@@ -19,11 +19,11 @@ class BeeNode:
 
         octant = 0
         if bx >= x:
-            octant |= 1
+            octant += 1
         if by >= y:
-            octant |= 2
+            octant += 2
         if bz >= z:
-            octant |= 4
+            octant += 4
 
         return self.child_nodes[octant]
 
@@ -75,11 +75,11 @@ class ThreeDeeBeeTree(Generic[I]):
                 return current
             octant = 0
             if key[0] >= current.key[0]:
-                octant |= 1
+                octant += 1
             if key[1] >= current.key[1]:
-                octant |= 2
+                octant += 2
             if key[2] >= current.key[2]:
-                octant |= 4
+                octant += 4
             current = current.get_child_for_key(key)
         raise KeyError(f"Key {key} not in tree.")
 
@@ -96,11 +96,11 @@ class ThreeDeeBeeTree(Generic[I]):
 
         octant = 0
         if key[0] >= current.key[0]:
-            octant |= 1
+            octant += 1
         if key[1] >= current.key[1]:
-            octant |= 2
+            octant += 2
         if key[2] >= current.key[2]:
-            octant |= 4
+            octant += 4
 
         child = current.get_child_for_key(key)
         if child is None:
