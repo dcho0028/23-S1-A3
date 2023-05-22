@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from heap import MaxHeap
 
-@dataclass
+@dataclass(order=True)
 class Beehive:
     """A beehive has a position in 3d space, and some stats."""
 
@@ -20,12 +20,31 @@ class BeehiveSelector:
         self.max_beehives = max_beehives
         self.beehives = MaxHeap(max_beehives)
 
+
     def set_all_beehives(self, hive_list: list[Beehive]):
+        """
         self.beehives = MaxHeap(self.max_beehives)
         for hive in hive_list:
             self.beehives.add(hive)
+
+
+        """
+        self.beehives = MaxHeap(self.max_beehives)
+        for hive in hive_list:
+            self.beehives.add(hive)
+
     
     def add_beehive(self, hive: Beehive):
+        """
+        if len(self.beehives) < self.max_beehives:
+            self.beehives.add(hive)
+        else:
+            max_hive = self.beehives.get_max()
+            if hive.capacity > max_hive.capacity:
+                self.beehives.add(hive)
+            else:
+                self.beehives.add(max_hive)
+        """
         if len(self.beehives) < self.max_beehives:
             self.beehives.add(hive)
         else:
@@ -35,9 +54,6 @@ class BeehiveSelector:
             else:
                 self.beehives.add(max_hive)
 
-        """
-                
-        """
 
 
     def harvest_best_beehive(self):

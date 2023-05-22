@@ -80,6 +80,7 @@ class BinarySearchTree(Generic[K, I]):
     def __setitem__(self, key: K, item: I) -> None:
         self.root = self.insert_aux(self.root, key, item)
 
+# edit here for task 1 b to have the subtree.size being updated
     def insert_aux(self, current: TreeNode, key: K, item: I) -> TreeNode:
         """
             Attempts to insert an item into the tree, it uses the Key to insert it
@@ -104,6 +105,7 @@ class BinarySearchTree(Generic[K, I]):
     def __delitem__(self, key: K) -> None:
         self.root = self.delete_aux(self.root, key)
 
+# edited here to have current.subtree.size to minus
     def delete_aux(self, current: TreeNode, key: K) -> TreeNode:
         """
             Attempts to delete an item from the tree, it uses the Key to
@@ -142,6 +144,28 @@ class BinarySearchTree(Generic[K, I]):
             Get successor of the current node.
             It should be a child node having the smallest key among all the
             larger keys.
+
+            Doc: first it will check the durrent.right to see if it none. if its not
+            none then it will return the function get_minimal with input current.right
+            if the right is none then it will have the successor to be none
+            and the root to be self.root and then it will check the root to see
+            if its not none it will enter the next node and by checking the left
+            or right and it will continue until the root is none once none it will
+            return the successor which is the key of the node . if its none then
+            it will get the successor to be none and it return none
+
+        time complexity:
+
+        best case: O(log N) as n is the number of nodes in the tree as the tree is perfectly
+        balanced and the tree is evenly filled with nodes
+
+        worst case: O(n) also n is the number of nodes in the tree as for o(n) is due to
+        having to visit every node in the linked list type of arrangement as a linear search is
+        operated therefor the worst will be o(n)
+
+
+
+
         """
         if current.right is not None:
             return self.get_minimal(current.right)
@@ -159,14 +183,23 @@ class BinarySearchTree(Generic[K, I]):
                 successor = None
                 break
 
-        #if successor is None or successor.key <= current.key:
-            #successor = None
-
         return successor
 
     def get_minimal(self, current: TreeNode) -> TreeNode:
         """
             Get a node having the smallest key in the current sub-tree.
+
+            Doc: this code will go through the current.left and check if its none or not
+            if its not none then it will update the current into current.left and then it will
+            only return the currnt when the current.left is none
+
+            time complexity:
+
+            best case : O(1) because the best case will return the current node
+            and doesnt need to iterate
+
+            worst case : O(n) where n is the number nodes in the trees it
+            have to iterate the whole list of nodes until its found
         """
         while current.left is not None:
             current = current.left
