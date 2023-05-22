@@ -69,7 +69,7 @@ class Percentiles(Generic[T]):
 
          worst case: O(n**2) where the partioning is unbalanced as the pivot element
          consistently selects the largest or the smallest element in the array .
-         
+
 
 
         """

@@ -233,6 +233,28 @@ class BinarySearchTree(Generic[K, I]):
     def kth_smallest(self, k: int, current: TreeNode) -> TreeNode:
         """
         Finds the kth smallest value by key in the subtree rooted at current.
+
+        Doc: first the code willcheck if current is none . if its none then
+        it will raise the value error . after that , it will check if the current
+        node has a left child, it retrieves the size of the left subtree (left_side)
+        by accessing the subtree_size attribute of the left child node. Otherwise, it sets left_side to 0
+        after that it will compare k with the left side while adding 1
+        and once its equal then it will return current which will be the kth smallest
+        value . then if k is lesser equals to the left sides of the subtree then the
+        function is recursively called on the left child node . and lastly
+        if the  neither of the above conditions is met, it means the kth smallest value lies in the right subtree.
+        In this case, the kth_smallest function is recursively called on the right child node with k adjusted by subtracting
+        the size of the left subtree (left_side + 1).The function continues recursively until
+        the base case is reached and the kth smallest value is found which is the base case.
+
+        complexity:
+
+        best case : O(log n) where the n is the number of nodes processed at each level of the
+        recursion as its being halfed
+
+        worst case: O(n) where n is the total number of nodes in the BST
+        as it occurs when the tree is highy unbalanced , resembling a linked list .
+
         """
         if current is None:
             raise ValueError("Invalid current node")
