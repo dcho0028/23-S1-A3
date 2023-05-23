@@ -14,6 +14,18 @@ class BeeNode:
     child_nodes: list[BeeNode | None] = field(default_factory=lambda: [None] * 8)
 
     def get_child_for_key(self, point: Point) -> BeeNode | None:
+        """
+        This code uses the child_nodes and what this child nodes represents
+        is the child nodes of the current node. it is a list of size 8, initialized with None values.
+        With that the get child for key method is based on to retrieve the child
+        node based on a given point . it takes the point and then its
+        variable is used to determine the octant (child index) based on the coordinates.
+        the octant is calculated by comparing the coordinates of the given point with the current node's key.
+        Finally, the method returns the child node corresponding to the determined octant from the child_nodes list.
+
+        time complexity O(1) because it performs a constant number of operations
+        regardless of the size of the tree or the number of child nodes.
+        """
         x,y,z = self.key
         bx,by,bz = point
 
@@ -69,6 +81,26 @@ class ThreeDeeBeeTree(Generic[I]):
 
     # did by me
     def get_tree_node_by_key(self, key: Point) -> BeeNode:
+        """
+        Doc :  this code is used to retrieve a tree node with a specific key
+        from the Bee Tree data structure it will take the key and search for the node
+        It start with the self.root being the current and then it enter a while loop
+        if the current isnt none it checks if the current node's key matches the desired key
+        if it is , then  it means the node with the desired key has been found, so it returns the current node
+        If the keys are not equal, then it calculates the octant value based on the comparisons
+        between the coordinates of the key and the current node's key . after that
+        the octant value determines the direction to traverse the tree based on the comparisons.
+        It helps determine which child node to explore next.
+        The method calls current.get_child_for_key(key) to retrieve the child node in the appropriate octant based on the key value
+
+        time complexity:
+
+        best case : o(1) the desired node is found at the root node itself(self.root) as the method
+        performs a single comparison to determine if the keys are equal
+
+        worst case: O(log n) where n is the number of the nodes in the tree as it
+        needs to traverse the tree from the root to the leaf nodes or until the desired node is found
+        """
         current = self.root
         while current is not None:
             if current.key == key:
@@ -90,6 +122,33 @@ class ThreeDeeBeeTree(Generic[I]):
     def insert_aux(self, current: BeeNode, key: Point, item: I) -> BeeNode:
         """
             Attempts to insert an item into the tree, it uses the Key to insert it
+
+        Doc: first this code checks if the current is none if it is then it
+        means the tree is empty at that position, so a new node is
+        created with the given key and item and returned . whenn it isnt none
+        the method determines the octant in which the new node should be inserted.
+        It compares the coordinates of the key with the coordinates of the current
+        node's key to determine the appropriate octant based on their relative values.
+        after that , the method calls current.get_child_for_key(key) to retrieve the
+        child node in the determined octant and source it to child . if its none
+        then it does the same thing where there is no existing node in that octant
+        it will assign as the new node is created with the given key and item
+        If the child node exists, the method recursively calls self.insert_aux
+        to continue the insertion process on the child node until a suitable position is found.
+        After inserting the new node or completing the recursive insertion process, the subtree_size
+        of the current node is incremented to account for the newly added node or updated subtree size.
+
+        time complexity:
+
+        best case: O(1) this is when the tree is empty (current is None),
+        the given code creates a new node and returns it in constant time.
+
+        worst case: The overall time complexity of the insert_aux method depends on
+        the shape and balance of the tree. In balanced trees, such as when using an optimized
+        insertion algorithm, the time complexity can be O(log n) on average. In unbalanced trees,
+        the time complexity can degrade to O(n) in the worst case.
+
+
         """
         if current is None:
             return BeeNode(key, item)
